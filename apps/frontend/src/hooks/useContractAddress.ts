@@ -13,7 +13,7 @@ type UseContractAddress = {
 const getLocalContractAddress = (name: SupportedContracts): string | undefined =>
   hardhatContracts[31337].localhost.contracts[name]?.address
 
-export const useContractAddress = (name: any): UseContractAddress => {
+export const useContractAddress = (name: SupportedContracts): UseContractAddress => {
   const [{ data, error, loading }] = useNetwork()
 
   const chainId = data?.chain?.id ?? NETWORKS[config.DEFAULT_NETWORK_NAME].chainId

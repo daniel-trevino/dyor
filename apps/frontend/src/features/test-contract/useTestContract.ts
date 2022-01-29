@@ -1,7 +1,6 @@
 import { ethers } from 'ethers'
-import { useContractRead, useContractWrite } from 'wagmi'
-import { LocalContractName } from '../../lib/contracts'
-import { getLocalContractAbiFromName } from '../../utils/local-contracts-utils'
+import { useAppContractRead } from '../../hooks/useAppContractRead'
+import { useAppContractWrite } from '../../hooks/useAppContractWrite'
 
 type ReadResponse = {
   data: ethers.utils.Result | undefined
@@ -21,27 +20,14 @@ type UseTestContract = {
   setMessage: WriteResponse
 }
 
-export const useTestContract = (
-  contractAddress: string,
-  contractName: LocalContractName
-): UseTestContract => {
-  const contractConfig = {
-    addressOrName: contractAddress,
-    contractInterface: getLocalContractAbiFromName(contractName),
-  }
+const contractName = 'TestContract'
 
-  const [message] = useContractRead(contractConfig, 'message', {
-    watch: true,
-  })
-  const [setMessage, setMessageFunction] = useContractWrite(contractConfig, 'setMessage')
+export const useTestContract = (): UseTestContract => {
+  const message = useAppContractRead(contractName, 'message')
+  const setMessage = useAppContractWrite(contractName, 'setMessage')
 
   return {
     message: { data: message.data, error: message.error, loading: message.loading },
-    setMessage: {
-      run: setMessageFunction,
-      data: setMessage.data,
-      error: setMessage.error,
-      loading: setMessage.loading,
-    },
+    setMessage,
   }
 }

@@ -35,7 +35,7 @@ export const supportedContracts: SupportedContractAddresses = {
 }
 
 export const getContractAddress = (
-  contract: SupportedContractName,
+  contract: SupportedContracts,
   currentNetwork: SupportedNetworks
 ): string | undefined => {
   try {

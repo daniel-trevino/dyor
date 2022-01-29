@@ -1,16 +1,11 @@
 import { useState } from 'react'
 import AppButton from '../../components/AppButton'
-import { LocalContractName } from '../../lib/contracts'
+
 import { useTestContract } from './useTestContract'
 
-type Props = {
-  contractAddress: string
-  contractName: LocalContractName
-}
-
-const TestContractMessage: React.FC<Props> = ({ contractAddress, contractName }) => {
+const TestContractMessage: React.FC = () => {
   const [value, setValue] = useState<string | undefined>(undefined)
-  const { message, setMessage } = useTestContract(contractAddress, contractName)
+  const { message, setMessage } = useTestContract()
 
   const onChange = (e): void => {
     setValue(e.target.value)
@@ -42,8 +37,7 @@ const TestContractMessage: React.FC<Props> = ({ contractAddress, contractName })
           />
         </label>
       </div>
-      <input />
-      <AppButton onClick={onSetMessage} loading={setMessage.loading} disabled={!value} needsAccount>
+      <AppButton onClick={onSetMessage} loading={false} disabled={!value} needsAccount>
         Set Message
       </AppButton>
     </div>
