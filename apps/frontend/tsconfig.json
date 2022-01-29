@@ -1,0 +1,5 @@
+{
+  "extends": "tsconfig/nextjs.json",
+  "include": ["next-env.d.ts", "src/**/*", "styles/globals.css", "generated/**/*"],
+  "exclude": ["node_modules", ".next", ".turbo"]
+}
