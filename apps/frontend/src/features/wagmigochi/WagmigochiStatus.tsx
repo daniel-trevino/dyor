@@ -1,11 +1,7 @@
-import { useWagmigochi } from './useWagmigochi'
+import { useAppContractRead } from '../../hooks/useAppContractRead'
 
-type Props = {
-  contractAddress: string
-}
-
-const WagmigochiStatus: React.FC<Props> = ({ contractAddress }) => {
-  const { status } = useWagmigochi(contractAddress)
+const WagmigochiStatus: React.FC = () => {
+  const status = useAppContractRead('WAGMIGOTCHI', 'status')
 
   return status.loading ? <div>Loading...</div> : <div>{status.data}</div>
 }

@@ -28,10 +28,18 @@ export const useAppContractRead = (
     contractInterface: getLocalContractAbiFromName(contractName),
   }
 
-  const [response] = useContractRead(contractConfig, functionName, {
-    watch: true,
-    ...config,
-  })
+  try {
+    const [response] = useContractRead(contractConfig, functionName, {
+      watch: true,
+      ...config,
+    })
 
-  return response
+    return response
+  } catch {
+    return {
+      data: undefined,
+      loading: false,
+      error: new Error(`Contract ${contractName} not found on this network`),
+    }
+  }
 }
