@@ -1,8 +1,8 @@
 const config = {
   ENVIRONMENT: process.env.ENVIRONMENT ?? 'dev',
   ROUNDED_DECIMALS: 4,
-  INFURA_ID: process.env.INFURA_ID ?? undefined,
-  DEFAULT_NETWORK_NAME: process.env.DEFAULT_NETWORK_NAME ?? 'localhost',
+  MAINNET_INFURA_KEY: process.env.NEXT_PUBLIC_MAINNET_INFURA_KEY ?? undefined,
+  DEFAULT_NETWORK_NAME: process.env.NEXT_PUBLIC_DEFAULT_NETWORK_NAME ?? 'localhost',
 }
 
 const appConfig = {

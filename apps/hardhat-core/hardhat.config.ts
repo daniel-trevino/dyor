@@ -14,19 +14,8 @@ import 'hardhat-abi-exporter'
 
 dotenv.config({ path: '../../.env' })
 
-/*
-      📡 This is where you configure your deploy configuration for 🏗 scaffold-eth
-
-      check out `packages/scripts/deploy.js` to customize your deployment
-
-      out of the box it will auto deploy anything in the `contracts` folder and named *.sol
-      plus it will use *.args for constructor args
-*/
-
-//
-// Select the network you want to deploy to here:
-//
-const defaultNetwork = process.env.CONTRACT_DEPLOYMENT_NETWORK_NAME ?? 'hardhat'
+// Network you want to deploy to:
+const defaultNetwork = process.env.NEXT_PUBLIC_DEFAULT_NETWORK_NAME ?? 'localhost'
 
 const mainnetGwei = 21
 
@@ -56,12 +45,8 @@ export default {
     coinmarketcap: process.env.COINMARKETCAP || null,
   },
 
-  // if you want to deploy to a testnet, mainnet, or xdai, you will need to configure:
-  // 1. An Infura key (or similar)
-  // 2. A private key for the deployer
-  // DON'T PUSH THESE HERE!!!
-  // An `example.env` has been provided in the Hardhat root. Copy it and rename it `.env`
-  // Follow the directions, and uncomment the network you wish to deploy to.
+  // if you want to deploy to a testnet, mainnet, or xdai, you will need to configure an Infura key (or similar)
+  // See the example.env to see which variable you need to fill up
 
   networks: {
     localhost: {
@@ -69,78 +54,40 @@ export default {
       /*      
         notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
         (you can put in a mnemonic here to set the deployer locally)
-      
       */
     },
-
-    // rinkeby: {
-    //   url: `https://rinkeby.infura.io/v3/${process.env.RINKEBY_INFURA_KEY}`,
-    //   accounts: [`${process.env.RINKEBY_DEPLOYER_PRIV_KEY}`],
-    // },
-    // kovan: {
-    //   url: `https://rinkeby.infura.io/v3/${process.env.KOVAN_INFURA_KEY}`,
-    //   accounts: [`${process.env.KOVAN_DEPLOYER_PRIV_KEY}`],
-    // },
-    // mainnet: {
-    //   url: `https://mainnet.infura.io/v3/${process.env.MAINNET_INFURA_KEY}`,
-    //   accounts: [`${process.env.MAINNET_DEPLOYER_PRIV_KEY}`],
-    // },
-    // ropsten: {
-    //   url: `https://ropsten.infura.io/v3/${process.env.ROPSTEN_INFURA_KEY}`,
-    //   accounts: [`${process.env.ROPSTEN_DEPLOYER_PRIV_KEY}`],
-    // },
-    // goerli: {
-    //   url: `https://goerli.infura.io/v3/${process.env.GOERLI_INFURA_KEY}`,
-    //   accounts: [`${process.env.GOERLI_DEPLOYER_PRIV_KEY}`],
-    // },
-    // xdai: {
-    //   url: 'https://dai.poa.network',
-    //   gasPrice: 1000000000,
-    //   accounts: [`${process.env.XDAI_DEPLOYER_PRIV_KEY}`],
-    // },
-
-    // rinkeby: {
-    //   url: 'https://rinkeby.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-
-    //   //    url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXX/eth/rinkeby", // <---- YOUR MORALIS ID! (not limited to infura)
-
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${process.env.RINKEBY_INFURA_KEY}`,
+      //    url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXX/eth/rinkeby", // <---- YOUR MORALIS ID! (not limited to infura)
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
     kovan: {
-      url: 'https://kovan.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-
+      url: `https://kovan.infura.io/v3/${process.env.KOVAN_INFURA_KEY}`,
       //    url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXX/eth/kovan", // <---- YOUR MORALIS ID! (not limited to infura)
-
       accounts: {
         mnemonic: mnemonic(),
       },
     },
     mainnet: {
-      url: 'https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-
+      url: `https://mainnet.infura.io/v3/${process.env.MAINNET_INFURA_KEY}`,
       //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/mainnet", // <---- YOUR MORALIS ID! (not limited to infura)
-
       gasPrice: mainnetGwei * 1000000000,
       accounts: {
         mnemonic: mnemonic(),
       },
     },
     ropsten: {
-      url: 'https://ropsten.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-
+      url: `https://ropsten.infura.io/v3/${process.env.ROPSTEN_INFURA_KEY}`,
       //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/ropsten",// <---- YOUR MORALIS ID! (not limited to infura)
-
       accounts: {
         mnemonic: mnemonic(),
       },
     },
     goerli: {
-      url: 'https://goerli.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-
+      url: `https://goerli.infura.io/v3/${process.env.GOERLI_INFURA_KEY}`,
       //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/goerli", // <---- YOUR MORALIS ID! (not limited to infura)
-
       accounts: {
         mnemonic: mnemonic(),
       },
@@ -166,7 +113,6 @@ export default {
         mnemonic: mnemonic(),
       },
     },
-
     matic: {
       url: 'https://rpc-mainnet.maticvigil.com/',
       gasPrice: 1000000000,
@@ -323,6 +269,6 @@ export default {
     },
   },
   etherscan: {
-    apiKey: 'DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW',
+    apiKey: process.env.ETHERSCAN_API_KEY,
   },
 }

@@ -57,7 +57,8 @@ export const defaultProvider = ({
   const normalizedChain =
     chainId === undefined ? NETWORKS[config.DEFAULT_NETWORK_NAME].chainId : chainId
 
+  console.log({ test: config.MAINNET_INFURA_KEY })
   return normalizedChain === NETWORKS.localhost.chainId || noSignerConnected
     ? createFallbackProvider(normalizedChain)
-    : new providers.InfuraProvider(normalizedChain, config.INFURA_ID)
+    : new providers.InfuraProvider(normalizedChain, config.MAINNET_INFURA_KEY)
 }
