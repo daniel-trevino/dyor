@@ -1,6 +1,5 @@
 import { ethers } from 'ethers'
-import { useContractRead } from 'wagmi'
-import { WagmigotchiAbi__factory } from '../../../generated/typechain'
+import { useAppContractRead } from '../../hooks/useAppContractRead'
 
 type Response = {
   data: ethers.utils.Result | undefined
@@ -12,16 +11,10 @@ type UseWagmigotchi = {
   status: Response
 }
 
-export const useWagmigochi = (contractAddress: string): UseWagmigotchi => {
-  const [{ data, error, loading }] = useContractRead(
-    {
-      addressOrName: contractAddress,
-      contractInterface: WagmigotchiAbi__factory.abi,
-    },
-    'getStatus'
-  )
+export const useWagmigochi = (): UseWagmigotchi => {
+  const status = useAppContractRead('WAGMIGOTCHI', 'getStatus')
 
   return {
-    status: { data, error, loading },
+    status,
   }
 }

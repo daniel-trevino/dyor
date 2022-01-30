@@ -11,7 +11,7 @@ type UseContractAddress = {
 }
 
 const getLocalContractAddress = (name: SupportedContracts): string | undefined =>
-  hardhatContracts[31337].localhost.contracts[name]?.address
+  hardhatContracts[31337][0].contracts[name]?.address
 
 export const useContractAddress = (name: SupportedContracts): UseContractAddress => {
   const [{ data, error, loading }] = useNetwork()

@@ -1,7 +1,7 @@
-import { useAppContractRead } from '../../hooks/useAppContractRead'
+import { useWagmigochi } from './useWagmigochi'
 
 const WagmigochiStatus: React.FC = () => {
-  const status = useAppContractRead('WAGMIGOTCHI', 'status')
+  const { status } = useWagmigochi()
 
   return status.loading ? <div>Loading...</div> : <div>{status.data}</div>
 }

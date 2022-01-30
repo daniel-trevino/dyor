@@ -39,7 +39,9 @@ export const useAppContractRead = (
     return {
       data: undefined,
       loading: false,
-      error: new Error(`Contract ${contractName} not found on this network`),
+      error: new Error(
+        `Contract ${contractName} not found on this network. Make sure DEFAULT_NETWORK_NAME is set correctly`
+      ),
     }
   }
 }

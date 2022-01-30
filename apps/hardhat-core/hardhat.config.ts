@@ -71,7 +71,7 @@ export default {
       },
     },
     mainnet: {
-      url: `https://mainnet.infura.io/v3/${process.env.MAINNET_INFURA_KEY}`,
+      url: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_MAINNET_INFURA_KEY}`,
       //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/mainnet", // <---- YOUR MORALIS ID! (not limited to infura)
       gasPrice: mainnetGwei * 1000000000,
       accounts: {
@@ -254,8 +254,9 @@ export default {
     ],
   },
   abiExporter: {
-    path: './data/abi',
-    clear: true,
+    path: '../frontend/abi',
+    runOnCompile: true,
+    clear: false,
     flat: true,
     only: [],
     spacing: 2,

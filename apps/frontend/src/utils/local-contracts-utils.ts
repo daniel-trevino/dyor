@@ -1,4 +1,4 @@
-import hardhatContracts from '../../generated/contracts/hardhat_contracts.json'
+import * as value from '../../generated/typechain'
 
-export const getLocalContractAbiFromName = (name: string): any =>
-  hardhatContracts[31337].localhost.contracts[name]?.abi
+// eslint-disable-next-line import/namespace
+export const getLocalContractAbiFromName = (name: string): any => value[`${name}__factory`].abi

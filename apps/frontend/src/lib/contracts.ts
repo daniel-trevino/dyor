@@ -4,8 +4,10 @@ type ContractAddresses = {
   [key in SupportedNetworks]?: string
 }
 
+// Name should have the same as in the Solidity file contract
 export type LocalContractName = 'TestContract'
 
+// Name should have the same as in the abi file added to /abi folder
 export type SupportedContractName = 'USDC' | 'WAGMIGOTCHI'
 
 export type SupportedErc20Token = 'USDC'
