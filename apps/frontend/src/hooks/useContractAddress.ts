@@ -18,7 +18,8 @@ export const useContractAddress = (name: SupportedContracts): UseContractAddress
 
   const chainId = data?.chain?.id ?? NETWORKS[config.DEFAULT_NETWORK_NAME].chainId
   const isLocalhost = chainId === NETWORKS.localhost.chainId
-  const chainName = (data?.chain?.name.toLowerCase() as SupportedNetworks) || 'mainnet'
+  const chainName = (data?.chain?.name.toLowerCase() ||
+    config.DEFAULT_NETWORK_NAME) as SupportedNetworks
 
   let contractAddress
   if (chainId) {

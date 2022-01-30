@@ -1,7 +1,7 @@
 import { ethers, providers } from 'ethers'
 import { Chain, defaultChains, InjectedConnector } from 'wagmi'
 import config from '../lib/config'
-import { NETWORKS } from '../lib/constants'
+import { getNetworkByChainId, NETWORKS } from '../lib/constants'
 
 // Chains for connectors to support
 const chains: Chain[] = [
@@ -34,8 +34,9 @@ export class StaticJsonRpcBatchProvider extends ethers.providers.JsonRpcBatchPro
   detectNetwork = ethers.providers.StaticJsonRpcProvider.prototype.detectNetwork.bind(this)
 }
 
-export const createFallbackProvider = (chainId: string): ethers.providers.FallbackProvider => {
-  const fallbackProviderConfigs = NETWORKS.localhost.rpcUrls
+export const createFallbackProvider = (chainId: number): ethers.providers.FallbackProvider => {
+  const network = getNetworkByChainId(chainId)
+  const fallbackProviderConfigs = network.rpcUrls
     .map((rpcUrl) => new StaticJsonRpcBatchProvider(rpcUrl, chainId))
     .map((provider, i) => ({
       provider,
@@ -53,11 +54,8 @@ export const createFallbackProvider = (chainId: string): ethers.providers.Fallba
 export const defaultProvider = ({
   chainId,
 }): ethers.providers.FallbackProvider | providers.InfuraProvider => {
-  const noSignerConnected = chainId === undefined
   const normalizedChain =
     chainId === undefined ? NETWORKS[config.DEFAULT_NETWORK_NAME].chainId : chainId
 
-  return normalizedChain === NETWORKS.localhost.chainId || noSignerConnected
-    ? createFallbackProvider(normalizedChain)
-    : new providers.InfuraProvider(normalizedChain, config.MAINNET_INFURA_KEY)
+  return createFallbackProvider(normalizedChain)
 }

@@ -27,7 +27,11 @@ export const useTestContract = (): UseTestContract => {
   const setMessage = useAppContractWrite(contractName, 'setMessage')
 
   return {
-    message: { data: message.data, error: message.error, loading: message.loading },
+    message: {
+      data: message.data,
+      error: message.error,
+      loading: message.loading && message.data === undefined,
+    },
     setMessage,
   }
 }

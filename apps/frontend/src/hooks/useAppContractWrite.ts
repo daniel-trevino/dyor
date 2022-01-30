@@ -1,4 +1,4 @@
-import { useContractWrite } from 'wagmi'
+import { useContractWrite, useWaitForTransaction } from 'wagmi'
 import { CallOverrides, ethers } from 'ethers'
 import { SupportedContracts } from '../lib/contracts'
 import { useContractAddress } from './useContractAddress'
@@ -28,11 +28,14 @@ export const useAppContractWrite = (
   }
 
   const [response, setterFunction] = useContractWrite(contractConfig, functionName, config)
+  const [{ error, loading }] = useWaitForTransaction({
+    hash: response.data?.hash,
+  })
 
   return {
-    run: setterFunction,
     data: response.data,
-    error: response.error,
-    loading: response.loading,
+    error: response.error || error,
+    loading: response.loading || loading,
+    run: setterFunction,
   }
 }

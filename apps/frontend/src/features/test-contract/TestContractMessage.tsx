@@ -4,7 +4,7 @@ import AppButton from '../../components/AppButton'
 import { useTestContract } from './useTestContract'
 
 const TestContractMessage: React.FC = () => {
-  const [value, setValue] = useState<string | undefined>(undefined)
+  const [value, setValue] = useState<string>('')
   const { message, setMessage } = useTestContract()
 
   const onChange = (e): void => {
@@ -37,7 +37,12 @@ const TestContractMessage: React.FC = () => {
           />
         </label>
       </div>
-      <AppButton onClick={onSetMessage} loading={false} disabled={!value} needsAccount>
+      <AppButton
+        onClick={onSetMessage}
+        loading={setMessage.loading}
+        disabled={!value || setMessage.loading}
+        needsAccount
+      >
         Set Message
       </AppButton>
     </div>

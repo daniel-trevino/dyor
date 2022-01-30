@@ -35,7 +35,7 @@ export const useAppContractRead = (
     })
 
     return response
-  } catch {
+  } catch (e) {
     return {
       data: undefined,
       loading: false,

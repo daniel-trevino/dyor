@@ -86,7 +86,7 @@ export default {
       },
     },
     goerli: {
-      url: `https://goerli.infura.io/v3/${process.env.GOERLI_INFURA_KEY}`,
+      url: `https://goerli.infura.io/v3/${process.env.NEXT_PUBLIC_GOERLI_INFURA_KEY}`,
       //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/goerli", // <---- YOUR MORALIS ID! (not limited to infura)
       accounts: {
         mnemonic: mnemonic(),

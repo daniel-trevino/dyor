@@ -73,7 +73,7 @@ export const NETWORKS: Networks = {
     chainId: 5,
     faucet: 'https://goerli-faucet.slock.it',
     blockExplorer: 'https://goerli.etherscan.io',
-    rpcUrls: [`https://goerli.infura.io/v3/${config.INFURA_ID}`],
+    rpcUrls: [`https://goerli.infura.io/v3/${config.GOERLI_INFURA_KEY}`],
     gasPrice: utils.parseUnits('60', 'gwei'),
   },
   xdai: {
@@ -116,4 +116,12 @@ export const NETWORKS: Networks = {
     faucet: 'https://testnet.binance.org/faucet-smart',
     blockExplorer: 'https://testnet.bscscan.com',
   },
+}
+
+export const getNetworkByChainId = (chainId: number): Network => {
+  const network = Object.values(NETWORKS).find((networkObject) => networkObject.chainId === chainId)
+  if (!network) {
+    throw new Error(`Unsupported network with chainId ${chainId}`)
+  }
+  return network
 }

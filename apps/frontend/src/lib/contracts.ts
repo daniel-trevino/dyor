@@ -16,7 +16,9 @@ export type SupportedContractAddresses = {
   [key in SupportedContracts]: ContractAddresses
 }
 
-export const TEST_CONTRACT_ADDRESSES: ContractAddresses = {}
+export const TEST_CONTRACT_ADDRESSES: ContractAddresses = {
+  goerli: '0x85D217c8370CD0faD2dF1885dBADfA51ba2dD09A',
+}
 
 export const WAGMIGOTCHI_ADDRESSES: ContractAddresses = {
   mainnet: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
