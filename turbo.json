@@ -10,6 +10,9 @@
     },
     "dev": {
       "cache": false
+    },
+    "compile": {
+      "cache": false
     }
   }
 }
