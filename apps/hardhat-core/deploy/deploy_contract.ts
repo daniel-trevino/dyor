@@ -4,7 +4,10 @@ import chalk from 'chalk'
 
 const contractName = 'TestContract'
 
-const defaultNetwork = process.env.CONTRACT_DEPLOYMENT_NETWORK_NAME ?? 'hardhat'
+const defaultNetwork =
+  process.env.NEXT_PUBLIC_DEFAULT_NETWORK_NAME === 'localhost'
+    ? 'hardhat'
+    : process.env.NEXT_PUBLIC_DEFAULT_NETWORK_NAME
 chalk.magenta(`Deploying to ${defaultNetwork} 🛰`)
 
 const func: DeployFunction = async ({

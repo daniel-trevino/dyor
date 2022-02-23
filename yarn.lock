@@ -9392,22 +9392,22 @@ w3c-xmlserializer@^2.0.0:
   dependencies:
     xml-name-validator "^3.0.0"
 
-wagmi-core@0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/wagmi-core/-/wagmi-core-0.1.11.tgz#176326f66021a1a1df913e937a4b155acef553a0"
-  integrity sha512-zHiLEo3V4GRC0yYOkjtdix2cdWMbCl6LZ/lQjzD0sx6Lx0JODNWLEud0zZEATsZnUa6mXvTVSH2HPM+cbkJWog==
+wagmi-core@0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/wagmi-core/-/wagmi-core-0.1.12.tgz#ae4e9e731a36a1765a7a944719f55d9e63e73d4f"
+  integrity sha512-OLBvQS3KqxqtI2C2um5JAR1KNvpseh1rT7mS48hiN/JtaNf4IRYXqbjtzyUqc4qXytH8TikWI1qAYv4blDsh8Q==
   dependencies:
     "@ethersproject/providers" "^5.5.1"
     eventemitter3 "^4.0.7"
 
-wagmi@0.2.15:
-  version "0.2.15"
-  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-0.2.15.tgz#a1b63d9c3b23633be20fee36dd5c2e8f0593a435"
-  integrity sha512-6Xf3vBm4Ot43QeLgoPUhhH8J0tGnK8GdsrwMDkNz4i72hjqCUawhOjgaF27BHdGea4RTv7S58He9RNRwVOT5gg==
+wagmi@0.2.16:
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-0.2.16.tgz#d1e44dc4972e66612d162fd3e276d217b348e4ab"
+  integrity sha512-Zv/6RKGo3lp/vLuoCphHcHgG75Qzc5I4uJkn26BVKfH/bUW2OpYqQX+w6GGTdHmINEkUsZaiKjNRhDatqkq7Mg==
   dependencies:
     "@ethersproject/providers" "^5.5.1"
     "@walletconnect/ethereum-provider" "1.7.1"
-    wagmi-core "0.1.11"
+    wagmi-core "0.1.12"
     walletlink "^2.2.8"
 
 walker@^1.0.7, walker@~1.0.5:

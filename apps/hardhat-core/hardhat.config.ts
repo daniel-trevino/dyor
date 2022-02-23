@@ -57,14 +57,14 @@ export default {
       */
     },
     rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${process.env.RINKEBY_INFURA_KEY}`,
+      url: `https://rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_RINKEBY_INFURA_KEY}`,
       //    url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXX/eth/rinkeby", // <---- YOUR MORALIS ID! (not limited to infura)
       accounts: {
         mnemonic: mnemonic(),
       },
     },
     kovan: {
-      url: `https://kovan.infura.io/v3/${process.env.KOVAN_INFURA_KEY}`,
+      url: `https://kovan.infura.io/v3/${process.env.NEXT_PUBLIC_KOVAN_INFURA_KEY}`,
       //    url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXX/eth/kovan", // <---- YOUR MORALIS ID! (not limited to infura)
       accounts: {
         mnemonic: mnemonic(),
@@ -79,7 +79,7 @@ export default {
       },
     },
     ropsten: {
-      url: `https://ropsten.infura.io/v3/${process.env.ROPSTEN_INFURA_KEY}`,
+      url: `https://ropsten.infura.io/v3/${process.env.NEXT_PUBLIC_ROPSTEN_INFURA_KEY}`,
       //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/ropsten",// <---- YOUR MORALIS ID! (not limited to infura)
       accounts: {
         mnemonic: mnemonic(),
