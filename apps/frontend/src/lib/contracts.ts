@@ -8,7 +8,7 @@ type ContractAddresses = {
 export type LocalContractName = 'TestContract'
 
 // Name should have the same as in the abi file added to /abi folder
-export type SupportedContractName = 'USDC' | 'WAGMIGOTCHI'
+export type SupportedContractName = 'USDC'
 
 export type SupportedErc20Token = 'USDC'
 
@@ -22,10 +22,6 @@ export const TEST_CONTRACT_ADDRESSES: ContractAddresses = {
   goerli: '0x85D217c8370CD0faD2dF1885dBADfA51ba2dD09A',
 }
 
-export const WAGMIGOTCHI_ADDRESSES: ContractAddresses = {
-  mainnet: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-}
-
 export const USDC_ADDRESSES: ContractAddresses = {
   mainnet: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
   ropsten: '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
@@ -34,7 +30,6 @@ export const USDC_ADDRESSES: ContractAddresses = {
 
 export const supportedContracts: SupportedContractAddresses = {
   USDC: USDC_ADDRESSES,
-  WAGMIGOTCHI: WAGMIGOTCHI_ADDRESSES,
   TestContract: TEST_CONTRACT_ADDRESSES,
 }
 

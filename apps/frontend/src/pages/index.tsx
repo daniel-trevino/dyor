@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import ConnectWalletButton from '../features/connect-wallet/ConnectWalletButton'
 import TestContract from '../features/test-contract/TestContract'
-import Wagmigochi from '../features/wagmigochi/Wagmigochi'
 
 const Home: React.FC = () => (
   <div className="p-2">
@@ -10,12 +9,11 @@ const Home: React.FC = () => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <nav className="flex top-0 right-0 justify-end mt-2 mr-2">
+    <nav className="top-0 right-0 mt-2 mr-2 flex justify-end">
       <ConnectWalletButton />
     </nav>
 
-    <main className="flex flex-col flex-1 justify-center items-center px-20 w-full text-center">
-      <Wagmigochi />
+    <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
       <TestContract />
     </main>
   </div>

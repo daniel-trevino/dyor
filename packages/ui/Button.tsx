@@ -6,6 +6,7 @@ export type ButtonProps = {
   block?: boolean
   onClick?: () => void
   loading?: boolean
+  children: React.ReactNode | string
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -18,10 +19,10 @@ export const Button: React.FC<ButtonProps> = ({
   <button
     type="button"
     className={clsx(
-      'flex justify-center items-center py-3 px-8 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md border border-transparent md:py-4 md:px-10 md:text-lg',
+      'flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 md:py-4 md:px-10 md:text-lg',
       {
         'w-full': block,
-        'opacity-50 cursor-not-allowed': disabled,
+        'cursor-not-allowed opacity-50': disabled,
         'cursor-wait': loading,
       }
     )}

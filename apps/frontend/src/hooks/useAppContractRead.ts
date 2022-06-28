@@ -6,7 +6,7 @@ import { getLocalContractAbiFromName } from '../utils/local-contracts-utils'
 
 type ReadResponse = {
   data: ethers.utils.Result | undefined
-  error: Error | undefined
+  error: boolean
   loading: boolean | undefined
 }
 
@@ -28,20 +28,18 @@ export const useAppContractRead = (
     contractInterface: getLocalContractAbiFromName(contractName),
   }
 
-  try {
-    const [response] = useContractRead(contractConfig, functionName, {
-      watch: true,
-      ...config,
-    })
+  const {
+    data: contractData,
+    isError,
+    isLoading,
+  } = useContractRead(contractConfig, functionName, {
+    watch: true,
+    ...config,
+  })
 
-    return response
-  } catch (e) {
-    return {
-      data: undefined,
-      loading: false,
-      error: new Error(
-        `Contract ${contractName} not found on this network. Make sure DEFAULT_NETWORK_NAME is set correctly`
-      ),
-    }
+  return {
+    data: contractData,
+    error: isError,
+    loading: isLoading,
   }
 }

@@ -18,20 +18,21 @@
     "test": "turbo run test"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "5.16.3",
-    "@testing-library/react": "13.0.0",
-    "@testing-library/react-hooks": "7.0.2",
-    "@testing-library/user-event": "14.0.4",
-    "@types/jest": "27.4.1",
-    "@types/node": "17.0.23",
-    "esbuild": "0.14.29",
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "13.3.0",
+    "@testing-library/react-hooks": "8.0.1",
+    "@testing-library/user-event": "14.2.1",
+    "@types/jest": "28.1.3",
+    "@types/node": "18.0.0",
+    "esbuild": "0.14.47",
     "esbuild-jest": "0.5.0",
-    "husky": "7.0.4",
-    "jest": "27.5.1",
-    "lint-staged": "12.3.7",
-    "prettier": "2.6.1",
-    "turbo": "1.1.10",
-    "typescript": "4.6.3"
+    "husky": "8.0.1",
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "28.1.1",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1",
+    "turbo": "1.3.1",
+    "typescript": "4.7.4"
   },
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [

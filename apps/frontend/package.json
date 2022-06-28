@@ -11,25 +11,27 @@
     "start": "next start"
   },
   "dependencies": {
-    "ethers": "5.6.2",
-    "next": "12.1.4",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "@rainbow-me/rainbowkit": "0.3.6",
+    "ethers": "5.6.9",
+    "lodash.merge": "4.6.2",
+    "next": "12.1.6",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "ui": "*",
-    "wagmi": "0.2.24"
+    "wagmi": "0.5.3"
   },
   "devDependencies": {
-    "@typechain/ethers-v5": "10.0.0",
-    "@types/node": "17.0.23",
-    "@types/react": "17.0.43",
-    "autoprefixer": "10.4.4",
+    "@typechain/ethers-v5": "10.1.0",
+    "@types/node": "18.0.0",
+    "@types/react": "18.0.14",
+    "autoprefixer": "10.4.7",
     "config": "*",
-    "eslint": "8.12.0",
+    "eslint": "8.18.0",
     "next-transpile-modules": "9.0.0",
-    "postcss": "8.4.12",
-    "tailwindcss": "3.0.23",
+    "postcss": "8.4.14",
+    "tailwindcss": "3.1.4",
     "tsconfig": "*",
-    "typechain": "8.0.0",
-    "typescript": "4.6.3"
+    "typechain": "8.1.0",
+    "typescript": "4.7.4"
   }
 }

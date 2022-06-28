@@ -1,27 +1,13 @@
-import React from 'react'
 import { Button, ButtonProps } from 'ui'
-import { useAccount, useConnect } from 'wagmi'
-import { METAMASK_CONNECTOR } from '../utils/web3-utils'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import React, { useEffect, useState } from 'react'
+import { useAccount } from 'wagmi'
 
 type Props = ButtonProps & {
   needsAccount?: boolean
 }
 
-const getText = ({
-  needsAccount,
-  loading,
-  account,
-  children,
-}: {
-  needsAccount: boolean
-  loading: boolean
-  account: string | undefined
-  children: React.ReactNode
-}): React.ReactNode | string => {
-  if (needsAccount && !account) {
-    return 'Connect Wallet'
-  }
-
+const getText = ({ loading, children }: { loading: boolean; children: string }): string => {
   if (loading) {
     return 'Loading...'
   }
@@ -36,17 +22,24 @@ const AppButton: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  const [account] = useAccount()
-  const [, connect] = useConnect()
-  const text = getText({ needsAccount, loading, account: account.data?.address, children })
+  const { data } = useAccount()
+  const [text, setText] = useState('Loading...')
+
+  useEffect(() => {
+    setText(
+      getText({
+        loading,
+        children: children as string,
+      })
+    )
+  }, [needsAccount, loading, data?.address, children])
 
   const onClickWrapper = (): void => {
-    if (needsAccount && !account.data) {
-      connect(METAMASK_CONNECTOR)
-    }
-    if (needsAccount && account.data && onClick) {
-      onClick()
-    }
+    onClick()
+  }
+
+  if (needsAccount && !data?.address) {
+    return <ConnectButton />
   }
 
   return (

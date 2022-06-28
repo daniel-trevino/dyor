@@ -6,7 +6,7 @@ import { getLocalContractAbiFromName } from '../utils/local-contracts-utils'
 
 type WriteResponse = {
   data: ethers.providers.TransactionResponse | undefined
-  error: Error | undefined
+  error: boolean
   loading: boolean | undefined
   run: any
 }
@@ -21,21 +21,22 @@ export const useAppContractWrite = (
   functionName: string,
   config?: Config
 ): WriteResponse => {
-  const { data } = useContractAddress(contractName)
+  const { data: contractAddress } = useContractAddress(contractName)
   const contractConfig = {
-    addressOrName: data,
+    addressOrName: contractAddress,
     contractInterface: getLocalContractAbiFromName(contractName),
   }
 
-  const [response, setterFunction] = useContractWrite(contractConfig, functionName, config)
-  const [{ error, loading }] = useWaitForTransaction({
-    hash: response.data?.hash,
-  })
+  const { data, isError, isLoading, write } = useContractWrite(contractConfig, functionName, config)
+  const { isError: isErrorWaitForTransaction, isLoading: isLoadingWaitTransaction } =
+    useWaitForTransaction({
+      hash: data?.hash,
+    })
 
   return {
-    data: response.data,
-    error: response.error || error,
-    loading: response.loading || loading,
-    run: setterFunction,
+    data,
+    error: isError || isErrorWaitForTransaction,
+    loading: isLoading || isLoadingWaitTransaction,
+    run: write,
   }
 }

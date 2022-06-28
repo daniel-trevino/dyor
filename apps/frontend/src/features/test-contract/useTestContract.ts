@@ -4,13 +4,13 @@ import { useAppContractWrite } from '../../hooks/useAppContractWrite'
 
 type ReadResponse = {
   data: ethers.utils.Result | undefined
-  error: Error | undefined
+  error: boolean
   loading: boolean | undefined
 }
 
 type WriteResponse = {
   data: ethers.providers.TransactionResponse | undefined
-  error: Error | undefined
+  error: boolean
   loading: boolean | undefined
   run: any
 }

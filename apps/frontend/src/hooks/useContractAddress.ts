@@ -11,14 +11,14 @@ type UseContractAddress = {
 }
 
 const getLocalContractAddress = (name: SupportedContracts): string | undefined =>
-  hardhatContracts[31337][0].contracts[name]?.address
+  hardhatContracts[NETWORKS.localhost.chainId][0].contracts[name]?.address
 
 export const useContractAddress = (name: SupportedContracts): UseContractAddress => {
-  const [{ data, error, loading }] = useNetwork()
+  const { activeChain, isLoading } = useNetwork()
 
-  const chainId = data?.chain?.id ?? NETWORKS[config.DEFAULT_NETWORK_NAME].chainId
+  const chainId = activeChain?.id ?? NETWORKS[config.DEFAULT_NETWORK_NAME].chainId
   const isLocalhost = chainId === NETWORKS.localhost.chainId
-  const chainName = (data?.chain?.name.toLowerCase() ||
+  const chainName = (activeChain?.name.toLowerCase() ||
     config.DEFAULT_NETWORK_NAME) as SupportedNetworks
 
   let contractAddress
@@ -30,7 +30,9 @@ export const useContractAddress = (name: SupportedContracts): UseContractAddress
 
   return {
     data: contractAddress,
-    error,
-    loading,
+    error: new Error(
+      `Contract ${name} not found on this network. Make sure DEFAULT_NETWORK_NAME is set correctly`
+    ),
+    loading: isLoading,
   }
 }

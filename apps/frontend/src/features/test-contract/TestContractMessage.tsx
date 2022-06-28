@@ -18,17 +18,18 @@ const TestContractMessage: React.FC = () => {
     setValue('')
   }
 
+  console.log({ message })
   return (
     <div>
       <div>
         <div className="mb-2 text-sm font-bold text-gray-700">Current message:</div>
-        {message.loading ? <div>Loading...</div> : <div>{message.data}</div>}
+        {/* {message.loading ? <div>Loading...</div> : <div>{message.data}</div>} */}
       </div>
       <div className="mt-16 mb-4">
-        <label className="block mb-2 text-sm font-bold text-left text-gray-700" htmlFor="username">
+        <label className="mb-2 block text-left text-sm font-bold text-gray-700" htmlFor="username">
           New Message
           <input
-            className="py-2 px-3 w-full leading-tight text-gray-700 rounded border focus:outline-none shadow appearance-none focus:shadow-outline"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
             id="newMessage"
             type="text"
             placeholder="Hello World!"
