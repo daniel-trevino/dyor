@@ -1,7 +1,7 @@
 module.exports = {
-  ...require('config/eslint-next'),
+  ...require('config/eslint-frontend'),
   rules: {
-    ...require('config/eslint-next').rules,
+    ...require('config/eslint-frontend').rules,
     // Typescript
     'import/no-extraneous-dependencies': 'off',
   },

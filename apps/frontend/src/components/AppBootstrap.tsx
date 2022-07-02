@@ -6,6 +6,7 @@ import { chain, createClient, WagmiConfig, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { infuraProvider } from 'wagmi/providers/infura'
 import merge from 'lodash.merge'
+import React from 'react'
 import config from '../lib/config'
 
 const selectedChain = config.isProduction ? chain.mainnet : chain.hardhat
@@ -33,7 +34,7 @@ const wagmiClient = createClient({
   provider,
 })
 
-const AppBootstrap: React.FC = ({ children }) => (
+const AppBootstrap: React.FC<{ children: React.ReactElement }> = ({ children }) => (
   <WagmiConfig client={wagmiClient}>
     <RainbowKitProvider theme={myTheme} chains={chains}>
       {children}

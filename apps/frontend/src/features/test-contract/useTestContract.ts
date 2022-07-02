@@ -12,6 +12,7 @@ type WriteResponse = {
   data: ethers.providers.TransactionResponse | undefined
   error: boolean
   loading: boolean | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   run: any
 }
 

@@ -11,25 +11,31 @@
     "start": "next start"
   },
   "dependencies": {
-    "@rainbow-me/rainbowkit": "0.3.6",
+    "@rainbow-me/rainbowkit": "0.4.1",
     "ethers": "5.6.9",
     "lodash.merge": "4.6.2",
-    "next": "12.1.6",
+    "next": "12.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "ui": "*",
-    "wagmi": "0.5.3"
+    "wagmi": "0.5.5"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "13.3.0",
+    "@testing-library/react-hooks": "8.0.1",
+    "@testing-library/user-event": "14.2.1",
     "@typechain/ethers-v5": "10.1.0",
+    "@types/lodash.merge": "4.6.7",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "autoprefixer": "10.4.7",
     "config": "*",
-    "eslint": "8.18.0",
+    "eslint": "8.19.0",
     "next-transpile-modules": "9.0.0",
     "postcss": "8.4.14",
     "tailwindcss": "3.1.4",
+    "ts-jest": "28.0.5",
     "tsconfig": "*",
     "typechain": "8.1.0",
     "typescript": "4.7.4"

@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app'
-import '../styles/globals.css'
 import AppBootstrap from '../components/AppBootstrap'
+import '../styles/globals.css'
 
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => (
   <AppBootstrap>

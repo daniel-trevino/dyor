@@ -38,12 +38,13 @@ generated
 # Dotenv
 .env
 
-# Hardhat
-apps/**/data
-apps/hardhat-core/*.txt
-apps/hardhat-core/artifacts*
-apps/hardhat-core/deployments
-apps/hardhat-core/cache*
-apps/hardhat-core/cache
+# --------- Smart Contracts ---------
+typechain/
+artifacts*
+cache*
 cache
-artifacts
+
+## Ignores deployments/localhost across all the sub-folders
+**/deployments/localhost
+## Ignores .openzeppelin/unknown-31337.json across all the sub-folders
+**/.openzeppelin/unknown-31337.json

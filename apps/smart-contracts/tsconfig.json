@@ -1,0 +1,5 @@
+{
+  "extends": "tsconfig/smart-contracts.json",
+  "include": ["deploy/**/*", "scripts/**/*"],
+  "files": ["./hardhat.config.ts"]
+}

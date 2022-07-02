@@ -1,7 +1,7 @@
 import { useContractRead } from 'wagmi'
 import { CallOverrides, ethers } from 'ethers'
-import { SupportedContracts } from '../lib/contracts'
 import { useContractAddress } from './useContractAddress'
+import { SupportedContracts } from '../lib/contracts'
 import { getLocalContractAbiFromName } from '../utils/local-contracts-utils'
 
 type ReadResponse = {
@@ -11,7 +11,6 @@ type ReadResponse = {
 }
 
 type Config = {
-  args?: any | any[]
   overrides?: CallOverrides
   skip?: boolean
   watch?: boolean
@@ -24,7 +23,7 @@ export const useAppContractRead = (
 ): ReadResponse => {
   const { data } = useContractAddress(contractName)
   const contractConfig = {
-    addressOrName: data,
+    addressOrName: data ?? '',
     contractInterface: getLocalContractAbiFromName(contractName),
   }
 
@@ -32,7 +31,9 @@ export const useAppContractRead = (
     data: contractData,
     isError,
     isLoading,
-  } = useContractRead(contractConfig, functionName, {
+  } = useContractRead({
+    ...contractConfig,
+    functionName,
     watch: true,
     ...config,
   })

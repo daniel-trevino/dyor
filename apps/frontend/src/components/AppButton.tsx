@@ -7,7 +7,7 @@ type Props = ButtonProps & {
   needsAccount?: boolean
 }
 
-const getText = ({ loading, children }: { loading: boolean; children: string }): string => {
+const getText = ({ loading, children }: { loading?: boolean; children: string }): string => {
   if (loading) {
     return 'Loading...'
   }
@@ -22,7 +22,7 @@ const AppButton: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  const { data } = useAccount()
+  const { address } = useAccount()
   const [text, setText] = useState('Loading...')
 
   useEffect(() => {
@@ -32,13 +32,15 @@ const AppButton: React.FC<Props> = ({
         children: children as string,
       })
     )
-  }, [needsAccount, loading, data?.address, children])
+  }, [needsAccount, loading, address, children])
 
   const onClickWrapper = (): void => {
-    onClick()
+    if (onClick) {
+      onClick()
+    }
   }
 
-  if (needsAccount && !data?.address) {
+  if (needsAccount && !address) {
     return <ConnectButton />
   }
 

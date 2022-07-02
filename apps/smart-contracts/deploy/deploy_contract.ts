@@ -1,13 +1,12 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import chalk from 'chalk'
+import { NETWORKS } from 'shared-constants'
 
 const contractName = 'TestContract'
 
-const defaultNetwork =
-  process.env.NEXT_PUBLIC_DEFAULT_NETWORK_NAME === 'localhost'
-    ? 'hardhat'
-    : process.env.NEXT_PUBLIC_DEFAULT_NETWORK_NAME
+const defaultNetwork = process.env.NEXT_PUBLIC_DEFAULT_NETWORK_NAME ?? NETWORKS.hardhat.name
+
 chalk.magenta(`Deploying to ${defaultNetwork} 🛰`)
 
 const func: DeployFunction = async ({
