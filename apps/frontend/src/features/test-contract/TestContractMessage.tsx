@@ -1,6 +1,4 @@
 import { ChangeEvent, useState } from 'react'
-// import { useContractRead } from 'wagmi'
-// import { TestContract__factory } from '../../../generated/typechain'
 import { useTestContract } from './useTestContract'
 import AppButton from '../../components/AppButton'
 

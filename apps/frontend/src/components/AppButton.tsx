@@ -1,5 +1,4 @@
 import { Button, ButtonProps } from 'ui'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import React, { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 
@@ -7,9 +6,23 @@ type Props = ButtonProps & {
   needsAccount?: boolean
 }
 
-const getText = ({ loading, children }: { loading?: boolean; children: string }): string => {
+const getText = ({
+  loading,
+  needsAccount,
+  address,
+  children,
+}: {
+  loading?: boolean
+  needsAccount: boolean
+  address?: string
+  children: string
+}): string => {
   if (loading) {
     return 'Loading...'
+  }
+
+  if (needsAccount && !address) {
+    return 'Connect wallet'
   }
 
   return children
@@ -29,6 +42,8 @@ const AppButton: React.FC<Props> = ({
     setText(
       getText({
         loading,
+        needsAccount,
+        address,
         children: children as string,
       })
     )
@@ -38,10 +53,6 @@ const AppButton: React.FC<Props> = ({
     if (onClick) {
       onClick()
     }
-  }
-
-  if (needsAccount && !address) {
-    return <ConnectButton />
   }
 
   return (
