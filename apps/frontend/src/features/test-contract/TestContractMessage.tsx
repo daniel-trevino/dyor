@@ -1,20 +1,15 @@
 import { ChangeEvent, useState } from 'react'
 import { useTestContract } from './useTestContract'
 import AppButton from '../../components/AppButton'
+import { useContractAddress } from '../../hooks/useContractAddress'
 
 const TestContractMessage: React.FC = () => {
   const [value, setValue] = useState<string>('')
-  const { message, setMessage } = useTestContract()
+  const { data } = useContractAddress('TestContract')
+  const { loading, message } = useTestContract(data)
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value)
-  }
-
-  const onSetMessage = async (): Promise<void> => {
-    await setMessage.run({
-      args: [value],
-    })
-    setValue('')
   }
 
   return (
@@ -36,14 +31,14 @@ const TestContractMessage: React.FC = () => {
           />
         </label>
       </div>
-      <AppButton
+      {/* <AppButton
         onClick={onSetMessage}
         loading={setMessage.loading}
         disabled={!value || setMessage.loading}
         needsAccount
       >
         Set Message
-      </AppButton>
+      </AppButton> */}
     </div>
   )
 }

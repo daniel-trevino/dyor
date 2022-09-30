@@ -5,17 +5,17 @@
   "types": "./index.tsx",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
+    "@types/react": "18.0.15",
+    "@types/react-dom": "18.0.6",
     "autoprefixer": "10.4.7",
     "config": "*",
-    "eslint": "8.19.0",
+    "eslint": "8.20.0",
     "postcss": "8.4.14",
-    "tailwindcss": "3.1.4",
+    "tailwindcss": "3.1.6",
     "tsconfig": "*",
     "typescript": "4.7.4"
   },
   "dependencies": {
-    "clsx": "1.1.1"
+    "clsx": "1.2.1"
   }
 }

@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
-import { useEffect, useState } from 'react'
-import { useAppContractRead } from '../../hooks/useAppContractRead'
+import { useContractRead } from 'wagmi'
 import { useAppContractWrite } from '../../hooks/useAppContractWrite'
+import { getLocalContractAbiFromName } from '../../utils/local-contracts-utils'
 
 type ReadResponse = {
   data: ethers.utils.Result | undefined
@@ -22,51 +22,22 @@ type UseTestContract = {
   setMessage: WriteResponse
 }
 
-const contractName = 'TestContract'
-
-export const useTestContract = (): UseTestContract => {
-  const [localState, setLocalState] = useState<UseTestContract>({
-    message: {
-      data: undefined,
-      error: false,
-      loading: true,
-    },
-    setMessage: {
-      data: undefined,
-      error: false,
-      loading: true,
-      run: () => {},
-    },
+export const useTestContract = (contractAddress: string): UseTestContract => {
+  const contractConfig = {
+    addressOrName: contractAddress,
+    contractInterface: getLocalContractAbiFromName('TestContract'),
+  }
+  const { data, isError, isLoading } = useContractRead({
+    ...contractConfig,
+    functionName: 'message',
+    watch: true,
   })
-  const message = useAppContractRead(contractName, 'message')
-  const setMessage = useAppContractWrite(contractName, 'setMessage')
 
-  useEffect(() => {
-    if (!message.loading && !setMessage.loading) {
-      setLocalState({
-        message: {
-          data: message.data,
-          error: message.error,
-          loading: message.loading,
-        },
-        setMessage: {
-          data: setMessage.data,
-          error: setMessage.error,
-          loading: setMessage.loading,
-          run: setMessage.run,
-        },
-      })
-    }
-  }, [
-    setLocalState,
-    message.loading,
-    message.data,
-    message.error,
-    setMessage.loading,
-    setMessage.data,
-    setMessage.error,
-    setMessage.run,
-  ])
-
-  return localState
+  console.log({ contractConfig, data, isError, isLoading })
+  return {
+    message: {
+      loading: isLoading,
+      data,
+    },
+  }
 }
