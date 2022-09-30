@@ -1,5 +1,6 @@
 import { useContractRead } from 'wagmi'
 import { CallOverrides, ethers } from 'ethers'
+import { useEffect, useState } from 'react'
 import { useContractAddress } from './useContractAddress'
 import { SupportedContracts } from '../lib/contracts'
 import { getLocalContractAbiFromName } from '../utils/local-contracts-utils'
@@ -20,7 +21,16 @@ export const useAppContractRead = (
   contractName: SupportedContracts,
   functionName: string,
   config?: Config
-): ReadResponse => {
+): { message: ReadResponse } => {
+  const [localState, setLocalState] = useState<{
+    message: ReadResponse
+  }>({
+    message: {
+      data: undefined,
+      error: false,
+      loading: true,
+    },
+  })
   const { data } = useContractAddress(contractName)
   const contractConfig = {
     addressOrName: data ?? '',
@@ -38,9 +48,21 @@ export const useAppContractRead = (
     ...config,
   })
 
-  return {
-    data: contractData,
-    error: isError,
-    loading: isLoading,
-  }
+  useEffect(() => {
+    if (!isLoading) {
+      const test: {
+        message: ReadResponse
+      } = {
+        message: {
+          data: contractData,
+          error: isError,
+          loading: isLoading,
+        },
+      }
+      setLocalState(test)
+    }
+  }, [setLocalState, contractData, isError, isLoading])
+
+  console.log({ contractData, localState })
+  return localState
 }
