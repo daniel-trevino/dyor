@@ -27,6 +27,8 @@ module.exports = {
   },
   rules: {
     ...require('./eslint-base').rules,
+    // common-rules
+    'no-param-reassign': 'off',
 
     '@next/next/no-html-link-for-pages': 'off',
     // react

@@ -63,6 +63,5 @@ export const useAppContractRead = (
     }
   }, [setLocalState, contractData, isError, isLoading])
 
-  console.log({ contractData, localState })
   return localState
 }

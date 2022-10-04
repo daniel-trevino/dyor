@@ -6,8 +6,11 @@ import { chain, createClient, WagmiConfig, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { infuraProvider } from 'wagmi/providers/infura'
 import merge from 'lodash.merge'
-import React from 'react'
+import React, { useEffect } from 'react'
 import config from '../lib/config'
+import useLocalStorageStore from '../hooks/useLocalStorageStore'
+import useWeb3Store from '../hooks/useWeb3Store'
+import useMulticallStore from '../hooks/useMulticallStore'
 
 const selectedChain = config.isProduction ? chain.mainnet : chain.hardhat
 const infuraId = config.isProduction ? config.MAINNET_INFURA_KEY : config.RINKEBY_INFURA_KEY
@@ -34,12 +37,24 @@ const wagmiClient = createClient({
   provider,
 })
 
-const AppBootstrap: React.FC<{ children: React.ReactElement }> = ({ children }) => (
-  <WagmiConfig client={wagmiClient}>
-    <RainbowKitProvider theme={myTheme} chains={chains}>
-      {children}
-    </RainbowKitProvider>
-  </WagmiConfig>
-)
+const AppBootstrap: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+  const { init: initLocalStorageStore } = useLocalStorageStore()
+  const { init: initWeb3Store } = useWeb3Store()
+  const { init: initMulticallStore } = useMulticallStore()
+
+  useEffect(() => {
+    initWeb3Store()
+    initMulticallStore()
+    initLocalStorageStore()
+  }, [initMulticallStore, initLocalStorageStore, initWeb3Store])
+
+  return (
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider theme={myTheme} chains={chains}>
+        {children}
+      </RainbowKitProvider>
+    </WagmiConfig>
+  )
+}
 
 export default AppBootstrap

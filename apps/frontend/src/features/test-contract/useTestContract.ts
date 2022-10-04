@@ -33,7 +33,6 @@ export const useTestContract = (contractAddress: string): UseTestContract => {
     watch: true,
   })
 
-  console.log({ contractConfig, data, isError, isLoading })
   return {
     message: {
       loading: isLoading,
