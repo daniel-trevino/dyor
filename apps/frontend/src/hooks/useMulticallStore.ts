@@ -36,55 +36,54 @@ const useMulticallStore = create<MulticallStoreState>((set, get) => ({
   multicall: undefined,
 
   init(): void {
+    const multicall2Contract = useWeb3Store.getState().smartContracts.Multicall2
     const multicall = new Multicall({
       ethersProvider: useWeb3Store.getState().coreProvider,
       tryAggregate: true,
-      multicallCustomContractAddress: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512', // Localhost
+      multicallCustomContractAddress: multicall2Contract.address,
     })
 
     set(() => ({ multicall }))
-    console.log('init Multicall', { multicall })
   },
   async call(): Promise<any> {
-    console.log('Making a call')
     const { multicall, contractCallContexts } = get()
     try {
       if (!multicall) throw Error('multicall must be initialized')
       const results = await multicall.call(cloneDeep(contractCallContexts))
       return results
 
-      return await multicall
-        .call(cloneDeep(contractCallContexts))
-        .then((results) => {
-          return results
+      // return await multicall
+      //   .call(cloneDeep(contractCallContexts))
+      //   .then((results) => {
+      //     return results
 
-          Object.values(results).forEach((res) => {
-            Object.values<ContractCallReturnContext>(res).forEach((val) => {
-              const { context } = val.originalContractCallContext
-              const { contractStore } = context ?? {}
+      //     Object.values(results).forEach((res) => {
+      //       Object.values<ContractCallReturnContext>(res).forEach((val) => {
+      //         const { context } = val.originalContractCallContext
+      //         const { contractStore } = context ?? {}
 
-              if (contractStore !== undefined && typeof contractStore.storage === 'object') {
-                val.callsReturnContext.forEach((call) => {
-                  const { methodName, returnValues } = call
-                  const paramStr = JSON.stringify(call.methodParameters)
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  const curReturnValues = contractStore.storage[methodName][paramStr]
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  if (deepEqual(curReturnValues, returnValues)) return
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  contractStore.storage[methodName][paramStr] = returnValues
-                })
-              }
-            })
-          })
-        })
-        // errors in here won't get caught by try catch
-        .catch((error) => {
-          console.log('MulticallError', { error })
-        })
+      //         if (contractStore !== undefined && typeof contractStore.storage === 'object') {
+      //           val.callsReturnContext.forEach((call) => {
+      //             const { methodName, returnValues } = call
+      //             const paramStr = JSON.stringify(call.methodParameters)
+      //             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //             // @ts-ignore
+      //             const curReturnValues = contractStore.storage[methodName][paramStr]
+      //             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //             // @ts-ignore
+      //             if (deepEqual(curReturnValues, returnValues)) return
+      //             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //             // @ts-ignore
+      //             contractStore.storage[methodName][paramStr] = returnValues
+      //           })
+      //         }
+      //       })
+      //     })
+      //   })
+      //   // errors in here won't get caught by try catch
+      //   .catch((error) => {
+      //     console.log('MulticallError', { error })
+      //   })
     } catch (error) {
       console.log('CallError', { error })
       return false
@@ -112,7 +111,6 @@ const useMulticallStore = create<MulticallStoreState>((set, get) => ({
     // Watch call
     activeCalls.add(uniqueCallId)
     const response = await call()
-    console.log('addingCall', { response })
     return response
   },
   removeCall(contextToRemove: ContractCallContext): void {

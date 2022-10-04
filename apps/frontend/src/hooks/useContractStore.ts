@@ -1,13 +1,9 @@
 import create from 'zustand'
-import deepEqual from 'fast-deep-equal'
-import cloneDeep from 'clone-deep'
-import { Multicall, ContractCallContext, ContractCallReturnContext } from 'ethereum-multicall'
-import { CallContext } from 'ethereum-multicall/dist/esm/models'
+import { ContractCallContext } from 'ethereum-multicall'
 import { Contract, providers } from 'ethers'
 import { useState } from 'react'
-import useWeb3Store from './useWeb3Store'
 import useMulticallStore from './useMulticallStore'
-import { TestContract__factory } from '../../generated/typechain'
+import useWeb3Store from './useWeb3Store'
 import { SupportedContracts } from '../lib/contracts'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,13 +19,13 @@ export type Factory = {
 
 type ContractStoreState = {
   loading: boolean | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any | undefined
   customCall: (params: CallParams) => string
 }
 
 type CallParams = {
   contractName: SupportedContracts
-  address?: string
   methodName: string
 }
 
@@ -37,18 +33,21 @@ const store = create<ContractStoreState>((set, get) => ({
   loading: undefined,
   data: undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  customCall({ address, contractName, methodName }: CallParams): any {
+  customCall({ contractName, methodName }: CallParams): any {
     useMulticallStore.subscribe((state) => {
       set({ loading: true })
 
-      if (state.multicall) {
-        console.log('multicall is ready')
-        if (!address) throw Error('address must be defined')
+      const applicationSmartContracts = useWeb3Store.getState().smartContracts
+      const contractAddress = applicationSmartContracts[contractName].address
+      const contractAbi = applicationSmartContracts[contractName].abi
 
+      if (state.multicall) {
+        if (!contractAddress) throw Error('address must be defined')
         const contractCallContext: ContractCallContext = {
           reference: contractName,
-          contractAddress: address,
-          abi: TestContract__factory.abi,
+          contractAddress,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          abi: contractAbi as any[],
           calls: [{ reference: methodName, methodName, methodParameters: [] }],
           // context: {
           //   contractStore: this,
@@ -57,10 +56,12 @@ const store = create<ContractStoreState>((set, get) => ({
         useMulticallStore
           .getState()
           .addCall(contractCallContext)
-          .then((res) => {
-            if (res) {
-              set({ loading: false, data: res })
-              console.log('request finished, updating data', { res, state: get() })
+          .then((multicallsResult) => {
+            if (multicallsResult) {
+              const customCallResult =
+                multicallsResult.results[contractName].callsReturnContext[0].returnValues[0]
+
+              set({ loading: false, data: customCallResult })
             }
           })
       }
@@ -69,9 +70,9 @@ const store = create<ContractStoreState>((set, get) => ({
 }))
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const useContractStore = ({ contractName, address, methodName }: CallParams) => {
+const useContractStore = ({ contractName, methodName }: CallParams) => {
   useState(() => {
-    store.getState().customCall({ contractName, address, methodName })
+    store.getState().customCall({ contractName, methodName })
   })
 
   return store

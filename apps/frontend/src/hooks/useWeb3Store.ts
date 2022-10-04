@@ -4,9 +4,11 @@ import Onboard, { OnboardAPI, type WalletState } from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { formatUnits } from 'ethers/lib/utils'
 import useLocalStorageStore from './useLocalStorageStore'
-import { Network, NETWORKS } from '../lib/constants'
+import { getNetworkByChainId, Network, NETWORKS } from '../lib/constants'
 import { ERC20_UNITS } from '../utils/constants'
 import numberFormatter from '../utils/numberFormatter'
+import { getSmartContracts, SmartContracts } from '../lib/contracts'
+import config from '../lib/config'
 
 const { withPrecision } = numberFormatter
 
@@ -22,9 +24,11 @@ type SignerState = {
 type Web3StoreState = {
   blockNumber: number | undefined
   coreProvider: ethers.providers.FallbackProvider
+  currentNetworkId: number | undefined
   signer: ethers.providers.JsonRpcSigner | undefined
   signerState: SignerState | undefined
   onboard: OnboardAPI
+  smartContracts: SmartContracts
   init: () => void
   connect: (previouslyConnectedWallet?: string) => Promise<void>
   handleWalletChange: (wallet: WalletState[]) => Promise<void>
@@ -60,8 +64,10 @@ const injected = injectedModule()
 const useWeb3Store = create<Web3StoreState>((set, get) => ({
   blockNumber: undefined,
   coreProvider: createFallbackProvider(NETWORKS.localhost),
+  currentNetworkId: undefined,
   signer: undefined,
   signerState: undefined,
+  smartContracts: getSmartContracts(config.DEFAULT_NETWORK_NAME),
   onboard: Onboard({
     // appMetadata: {
     //   name: 'DYOR',
@@ -116,14 +122,19 @@ const useWeb3Store = create<Web3StoreState>((set, get) => ({
     try {
       const [wallet] = wallets
       const { ens } = wallet.accounts[0]
+      const { id } = wallet.chains[0]
       const signer = new ethers.providers.Web3Provider(wallet.provider).getSigner()
       const signerAddress = await signer.getAddress()
       const signerBalance = await coreProvider.getBalance(signerAddress)
       const connectedWallets = wallets.map(({ label }) => label)
       useLocalStorageStore.getState().setLocalStorage('connectedWallets', connectedWallets)
 
+      const network = getNetworkByChainId(+id)
+
       const updatedState = {
         signer,
+        currentNetworkId: +id,
+        smartContracts: getSmartContracts(network.name),
         signerState: {
           ens,
           address: signerAddress,
