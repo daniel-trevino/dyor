@@ -25,6 +25,7 @@
     "react-dom": "18.2.0",
     "ui": "*",
     "wagmi": "0.6.7",
+    "shared-constants": "*",
     "zustand": "4.1.1"
   },
   "devDependencies": {

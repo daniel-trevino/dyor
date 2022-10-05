@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import create from 'zustand'
 import deepEqual from 'fast-deep-equal'
+import config from '../lib/config'
 
 type LocalStorageStore<StorageType> = {
   localStorageKey: string
@@ -14,7 +15,7 @@ type LocalStorageStore<StorageType> = {
 }
 
 type LocalStorage = {
-  connectedWallets: string[] | undefined
+  connectedWallets?: string[]
 }
 
 const initLocalStorage: LocalStorage = {
@@ -22,7 +23,7 @@ const initLocalStorage: LocalStorage = {
 }
 
 const useLocalStorageStore = create<LocalStorageStore<LocalStorage>>((set, get) => ({
-  localStorageKey: 'dyor',
+  localStorageKey: config.LOCAL_STORAGE_ID,
   windowLocalStorage: undefined,
   storage: initLocalStorage,
   init: (): void => {
@@ -39,9 +40,9 @@ const useLocalStorageStore = create<LocalStorageStore<LocalStorage>>((set, get) 
 
       if (!isEqual) {
         const updatedState = {
-          storage: localStorage as unknown as LocalStorage,
+          ...localStorage,
         }
-        set(() => updatedState)
+        set({ storage: updatedState })
         _setLocalStorage(updatedState)
       }
     }
@@ -66,9 +67,10 @@ const useLocalStorageStore = create<LocalStorageStore<LocalStorage>>((set, get) 
       ...storage,
       [localStorageKey]: value,
     }
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    set(() => updatedState)
+    set({ storage: updatedState })
     _setLocalStorage(updatedState)
   },
 }))

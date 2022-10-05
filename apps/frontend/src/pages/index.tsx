@@ -2,38 +2,25 @@ import Head from 'next/head'
 import ConnectWalletButton from '../features/connect-wallet/ConnectWalletButton'
 import SignerState from '../features/connect-wallet/SignerState'
 import TestComponent from '../features/connect-wallet/TestComponent'
-import TestContract from '../features/test-contract/TestContract'
-import useLocalStorageStore from '../hooks/useLocalStorageStore'
-import useWeb3Store from '../hooks/useWeb3Store'
 
-const Home: React.FC = () => {
-  const { connect } = useWeb3Store()
+const Home: React.FC = () => (
+  <div className="p-2">
+    <Head>
+      <title>DYOR dApp</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
 
-  const onConnect = async (): Promise<void> => {
-    await connect()
-  }
-  return (
-    <div className="p-2">
-      <Head>
-        <title>DYOR dApp</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <nav className="top-0 right-0 mt-2 mr-2 flex justify-end">
+      <ConnectWalletButton />
+    </nav>
 
-      <nav className="top-0 right-0 mt-2 mr-2 flex justify-end">
-        <ConnectWalletButton />
-      </nav>
+    <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+      {/* <TestContract /> */}
+    </main>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        {/* <TestContract /> */}
-        <button onClick={onConnect} type="button">
-          Connect
-        </button>
-      </main>
-
-      <SignerState />
-      <TestComponent />
-    </div>
-  )
-}
+    <SignerState />
+    <TestComponent />
+  </div>
+)
 
 export default Home

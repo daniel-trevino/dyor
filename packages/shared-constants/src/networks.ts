@@ -218,3 +218,11 @@ export const NETWORKS: Networks = {
 }
 
 export const DEFAULT_NETWORK = NETWORKS.goerli
+
+export const getNetworkByChainId = (chainId: number): Network => {
+  const network = Object.values(NETWORKS).find((networkObject) => networkObject.chainId === chainId)
+  if (!network) {
+    throw new Error(`Unsupported network with chainId ${chainId}`)
+  }
+  return network
+}

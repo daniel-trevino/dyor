@@ -1,4 +1,4 @@
-import { NETWORKS, SupportedNetworks } from './constants'
+import { NETWORKS, SupportedNetworks } from 'shared-constants'
 import { TestContract__factory } from '../../generated/typechain'
 import { Erc20__factory } from '../../generated/typechain/factories/Erc20__factory'
 import hardhatContracts from '../../generated/contracts/hardhat_contracts.json'

@@ -3,14 +3,17 @@ import { BigNumber, ethers } from 'ethers'
 import Onboard, { OnboardAPI, type WalletState } from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { formatUnits } from 'ethers/lib/utils'
+import { ChainId, getNetworkByChainId, Network, NETWORKS } from 'shared-constants'
 import useLocalStorageStore from './useLocalStorageStore'
-import { getNetworkByChainId, Network, NETWORKS } from '../lib/constants'
+import useMulticallStore from './useMulticallStore'
 import { ERC20_UNITS } from '../utils/constants'
 import numberFormatter from '../utils/numberFormatter'
 import { getSmartContracts, SmartContracts } from '../lib/contracts'
 import config from '../lib/config'
 
 const { withPrecision } = numberFormatter
+
+export const chainIdToHexString = (chainId: ChainId): string => `0x${chainId.toString(16)}`
 
 type SignerState = {
   ens: WalletState['accounts'][0]['ens'] | undefined
@@ -63,7 +66,7 @@ const injected = injectedModule()
 
 const useWeb3Store = create<Web3StoreState>((set, get) => ({
   blockNumber: undefined,
-  coreProvider: createFallbackProvider(NETWORKS.localhost),
+  coreProvider: createFallbackProvider(NETWORKS[config.DEFAULT_NETWORK_NAME]),
   currentNetworkId: undefined,
   signer: undefined,
   signerState: undefined,
@@ -75,32 +78,33 @@ const useWeb3Store = create<Web3StoreState>((set, get) => ({
     //   description: 'Web3 Fullstack Starter Kit',
     // },
     wallets: [injected],
-    chains: [
-      {
-        id: '0x1',
-        token: 'ETH',
-        label: 'Ethereum Mainnet',
-        rpcUrl: 'http://localhost:8545',
-      },
-    ],
+    chains: config.SUPPORTED_NETWORKS.map(({ chainId, chainName, rpcUrls }) => ({
+      id: chainIdToHexString(chainId),
+      label: chainName,
+      rpcUrl: rpcUrls[0],
+      token: 'ETH',
+    })),
   }),
   init(): void {
     const { connect, initCoreEventListeners } = get()
-    const previouslyConnectedWallets = useLocalStorageStore.getState().storage.connectedWallets
 
-    if (previouslyConnectedWallets) {
-      connect(previouslyConnectedWallets[0])
-    }
+    useLocalStorageStore.subscribe((state, prev) => {
+      const { signer } = get()
+      const { connectedWallets } = state.storage
+      const hasLoadedLocalStorage =
+        state.storage.connectedWallets?.length !== prev.storage.connectedWallets?.length
+
+      if (
+        hasLoadedLocalStorage &&
+        connectedWallets &&
+        connectedWallets.length > 0 &&
+        typeof signer === 'undefined'
+      ) {
+        connect(connectedWallets[0])
+      }
+    })
 
     initCoreEventListeners()
-
-    // Refetch state immediately when tab switches from inactive to active
-    // (check multicallStore exists so we don't exec this on mount)
-    // autorun(() => {
-    //   if (!this.root.browserStore.tabIsInactive && this.root.multicallStore) {
-    //     this.refreshChainState()
-    //   }
-    // })
   },
   connect: async (previouslyConnectedWallet?: string): Promise<void> => {
     const { onboard, handleWalletChange } = get()
@@ -144,6 +148,7 @@ const useWeb3Store = create<Web3StoreState>((set, get) => ({
           },
         },
       }
+
       set(() => updatedState)
     } catch (error) {
       console.log(error)
@@ -159,7 +164,7 @@ const useWeb3Store = create<Web3StoreState>((set, get) => ({
   handleNewBlock: (blockNumber: number): void => {
     try {
       set({ blockNumber })
-      // refreshChainState()
+      useMulticallStore.getState().call()
     } catch (error) {
       console.log('Error handling new block', { error })
     }

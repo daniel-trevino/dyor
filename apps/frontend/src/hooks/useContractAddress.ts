@@ -1,5 +1,5 @@
 import { useNetwork } from 'wagmi'
-import { NETWORKS, SupportedNetworks } from '../lib/constants'
+import { NETWORKS, SupportedNetworks } from 'shared-constants'
 import { getContractAddress, SupportedContracts } from '../lib/contracts'
 import hardhatContracts from '../../generated/contracts/hardhat_contracts.json'
 import config from '../lib/config'
