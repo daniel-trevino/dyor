@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import create from 'zustand'
-import deepEqual from 'fast-deep-equal'
 import cloneDeep from 'clone-deep'
 import { Multicall, ContractCallContext, ContractCallReturnContext } from 'ethereum-multicall'
 import { CallContext } from 'ethereum-multicall/dist/esm/models'
 import useWeb3Store from './useWeb3Store'
+import { ContractStore } from './useContractStore'
 
 function sameMethodAndParams(call0: CallContext, call1: CallContext): boolean {
   return (
@@ -19,6 +19,8 @@ function generateUniqueCallId(context: ContractCallContext): string {
   )}`
 }
 
+export const paramsToString = (params: any[]): string => JSON.stringify(params)
+
 type MulticallStoreState = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   contractCallContexts: ContractCallContext<{ cb: (res: any) => void }>[]
@@ -29,6 +31,8 @@ type MulticallStoreState = {
   addCall: (context: ContractCallContext) => Promise<any>
   removeCall: (contextToRemove: ContractCallContext) => void
 }
+
+const { setState: setStateContractStore } = ContractStore
 
 const useMulticallStore = create<MulticallStoreState>((set, get) => ({
   contractCallContexts: [],
@@ -49,8 +53,23 @@ const useMulticallStore = create<MulticallStoreState>((set, get) => ({
     const { multicall, contractCallContexts } = get()
     try {
       if (!multicall) throw Error('multicall must be initialized')
-      const results = await multicall.call(cloneDeep(contractCallContexts))
-      return results
+      const multicallRes = await multicall.call(cloneDeep(contractCallContexts))
+      const multicallResults = multicallRes.results
+      const smartContracts = Object.values<ContractCallReturnContext>(multicallResults)
+
+      const data = smartContracts.reduce((map, smartContractResponse) => {
+        const contractName = smartContractResponse.originalContractCallContext.reference
+        const { methodName, methodParameters } = smartContractResponse.callsReturnContext[0]
+        const contractParameters = paramsToString(methodParameters)
+        return {
+          ...map,
+          [`${contractName}-${methodName}-${contractParameters}`]:
+            smartContractResponse.callsReturnContext[0].returnValues[0],
+        }
+      }, {})
+
+      setStateContractStore({ data })
+      return multicallRes
 
       // return await multicall
       //   .call(cloneDeep(contractCallContexts))
@@ -93,7 +112,7 @@ const useMulticallStore = create<MulticallStoreState>((set, get) => ({
     const { activeCalls, contractCallContexts, call } = get()
     // Check if call is already watched
     const uniqueCallId = generateUniqueCallId(context)
-    if (activeCalls.has(uniqueCallId)) return
+    if (activeCalls.has(uniqueCallId)) return undefined
 
     // Get contract reference space to add call to
     const contractIndex = contractCallContexts.findIndex(

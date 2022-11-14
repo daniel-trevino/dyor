@@ -28,6 +28,8 @@ export type SmartContracts = {
   [key in SupportedContracts]: {
     address: string | undefined
     abi: unknown
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    factory: any
   }
 }
 
@@ -84,14 +86,17 @@ export const getSmartContracts = (currentNetwork: SupportedNetworks): SmartContr
     USDC: {
       address: getContractAddress('USDC', currentNetwork),
       abi: Erc20__factory.abi,
+      factory: Erc20__factory,
     },
     TestContract: {
       address: getContractAddress('TestContract', currentNetwork),
       abi: TestContract__factory.abi,
+      factory: TestContract__factory,
     },
     Multicall2: {
       address: getContractAddress('Multicall2', currentNetwork),
       abi: Multicall2__factory.abi,
+      factory: Multicall2__factory,
     },
   }
 

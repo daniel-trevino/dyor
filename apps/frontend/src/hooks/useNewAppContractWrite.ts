@@ -1,48 +1,36 @@
-import { useContractWrite, useWaitForTransaction } from 'wagmi'
-import { CallOverrides, ethers } from 'ethers'
-import { useContractAddress } from './useContractAddress'
+import { ethers } from 'ethers'
+import useContractStore from './useContractStore'
 import { SupportedContracts } from '../lib/contracts'
-import { getLocalContractAbiFromName } from '../utils/local-contracts-utils'
+import { SendTransactionReturn } from '../utils/web3.types'
 
-type WriteResponse = {
-  data: ethers.providers.TransactionResponse | undefined
+type ReadResponse = {
+  data: ethers.utils.Result | undefined
   error: boolean
   loading: boolean | undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  run: any
+  write: (params: any) => Promise<SendTransactionReturn | undefined> | undefined
 }
 
-type Config = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args?: any | any[]
-  overrides?: CallOverrides
-}
-
-export const useAppContractWrite = (
+export const useNewAppContractWrite = (
   contractName: SupportedContracts,
-  functionName: string,
-  config?: Config
-): WriteResponse => {
-  const { data: contractAddress } = useContractAddress(contractName)
-  const contractConfig = {
-    addressOrName: contractAddress ?? '',
-    contractInterface: getLocalContractAbiFromName(contractName),
-  }
-
-  const { data, isError, isLoading, write } = useContractWrite({
-    ...contractConfig,
-    functionName,
-    ...config,
+  methodName: string
+): ReadResponse => {
+  const contractStore = useContractStore({
+    contractName,
+    methodName,
+    write: true,
   })
-  const { isError: isErrorWaitForTransaction, isLoading: isLoadingWaitTransaction } =
-    useWaitForTransaction({
-      hash: data?.hash,
-    })
+
+  const { loading, data, write } = contractStore((state) => ({
+    loading: state.loading,
+    data: state.data,
+    write: state.write,
+  }))
 
   return {
     data,
-    error: isError || isErrorWaitForTransaction,
-    loading: isLoading || isLoadingWaitTransaction,
-    run: write,
+    loading,
+    error: false,
+    write,
   }
 }

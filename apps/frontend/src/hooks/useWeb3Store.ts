@@ -10,6 +10,7 @@ import { ERC20_UNITS } from '../utils/constants'
 import numberFormatter from '../utils/numberFormatter'
 import { getSmartContracts, SmartContracts } from '../lib/contracts'
 import config from '../lib/config'
+import { TransactionReceipt } from '../utils/web3.types'
 
 const { withPrecision } = numberFormatter
 
@@ -37,6 +38,7 @@ type Web3StoreState = {
   handleWalletChange: (wallet: WalletState[]) => Promise<void>
   initCoreEventListeners: () => void
   handleNewBlock: (blockNumber: number) => void
+  wait: (hash: string) => Promise<TransactionReceipt>
 }
 
 const SEC_IN_MS = 1000
@@ -106,6 +108,10 @@ const useWeb3Store = create<Web3StoreState>((set, get) => ({
 
     initCoreEventListeners()
   },
+  wait(hash: string): Promise<TransactionReceipt> {
+    const { coreProvider } = get()
+    return coreProvider.waitForTransaction(hash)
+  },
   connect: async (previouslyConnectedWallet?: string): Promise<void> => {
     const { onboard, handleWalletChange } = get()
     const onboardSettings = previouslyConnectedWallet
@@ -156,7 +162,7 @@ const useWeb3Store = create<Web3StoreState>((set, get) => ({
   },
   initCoreEventListeners(): void {
     const { coreProvider, handleNewBlock } = get()
-    coreProvider.on('block', handleNewBlock.bind(this))
+    coreProvider.on('block', handleNewBlock)
     coreProvider.on('error', (error) => {
       console.log('CoreProvider', { error })
     })
@@ -164,6 +170,7 @@ const useWeb3Store = create<Web3StoreState>((set, get) => ({
   handleNewBlock: (blockNumber: number): void => {
     try {
       set({ blockNumber })
+      console.log('New block! Calling multicall', { blockNumber })
       useMulticallStore.getState().call()
     } catch (error) {
       console.log('Error handling new block', { error })
