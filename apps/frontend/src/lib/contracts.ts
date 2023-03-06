@@ -48,7 +48,7 @@ export const TEST_CONTRACT_ADDRESSES: ContractAddresses = {
 export const USDC_ADDRESSES: ContractAddresses = {
   mainnet: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
   ropsten: '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
-  goerli: '0xaFF4481D10270F50f203E0763e2597776068CBc5',
+  goerli: '0xaFF4481D10270F50f203E0763e2597776068CBc5', // WEENUS
 }
 
 export const supportedContracts: SupportedContractAddresses = {

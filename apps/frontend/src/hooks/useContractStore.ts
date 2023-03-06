@@ -47,6 +47,13 @@ type ContractStoreState = {
   setWrite: (params: CallParams) => void
 }
 
+const paramsAreUndefined = (params: any): boolean => {
+  if (Array.isArray(params)) {
+    return params.every((param) => param === undefined)
+  }
+  return params === undefined
+}
+
 export const ContractStore = create<ContractStoreState>((set, get) => ({
   contract: undefined,
   loading: undefined,
@@ -131,18 +138,18 @@ const useContractStore = ({
   read = false,
   write = false,
 }: CallParams) => {
-  // useEffect(() => {
-  //   if (read) {
-  //     ContractStore.getState().customCall({ contractName, methodName, params })
-  //   }
-  // }, [contractName, methodName, read, params])
-
   useEffect(() => {
-    if (write) {
-      ContractStore.getState().setWrite({ contractName, methodName })
+    if (read && !paramsAreUndefined(params)) {
+      ContractStore.getState().customCall({ contractName, methodName, params })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [contractName, methodName, read, params])
+
+  // useEffect(() => {
+  //   if (write) {
+  //     ContractStore.getState().setWrite({ contractName, methodName })
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   return ContractStore
 }

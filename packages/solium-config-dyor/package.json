@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "index.js",
   "dependencies": {
-    "prettier-plugin-solidity": "1.0.0-dev.23",
+    "prettier-plugin-solidity": "1.0.0",
     "solium": "1.2.5"
   }
 }

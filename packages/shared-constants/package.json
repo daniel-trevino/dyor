@@ -12,7 +12,7 @@
     "build:watch": "yarn build --watch"
   },
   "dependencies": {
-    "ethers": "5.7.1"
+    "ethers": "5.7.2"
   },
   "devDependencies": {
     "config": "*",
