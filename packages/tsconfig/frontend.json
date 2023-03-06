@@ -3,8 +3,8 @@
   "display": "Frontend",
   "extends": "./base.json",
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext", "ES2015"],
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,7 +15,6 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "useDefineForClassFields": true,
     "jsx": "preserve"
   },
   "include": ["src", "next-env.d.ts"],

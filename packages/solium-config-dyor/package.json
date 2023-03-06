@@ -1,9 +1,0 @@
-{
-  "name": "solium-config-dyor",
-  "version": "0.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "solium": "1.2.5",
-    "prettier-plugin-solidity": "1.0.0-beta.19"
-  }
-}

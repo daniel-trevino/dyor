@@ -4,18 +4,16 @@
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",
-  "devDependencies": {
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
-    "autoprefixer": "10.4.7",
-    "config": "*",
-    "eslint": "8.19.0",
-    "postcss": "8.4.14",
-    "tailwindcss": "3.1.4",
-    "tsconfig": "*",
-    "typescript": "4.7.4"
+  "scripts": {
+    "lint": "eslint *.ts*"
   },
-  "dependencies": {
-    "clsx": "1.1.1"
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "eslint": "8.35.0",
+    "eslint-config-frontend": "workspace:*",
+    "react": "^18.2.0",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.2"
   }
 }

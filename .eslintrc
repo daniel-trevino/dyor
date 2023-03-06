@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "extends": ["dyor"],
+  "settings": {
+    "next": {
+      "rootDir": ["apps/*/"]
+    }
+  }
+}

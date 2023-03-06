@@ -31,20 +31,3 @@ yarn-error.log*
 
 # turbo
 .turbo
-
-# Generated types
-generated
-
-# Dotenv
-.env
-
-# --------- Smart Contracts ---------
-typechain/
-artifacts*
-cache*
-cache
-
-## Ignores deployments/localhost across all the sub-folders
-**/deployments/localhost
-## Ignores .openzeppelin/unknown-31337.json across all the sub-folders
-**/.openzeppelin/unknown-31337.json
