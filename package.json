@@ -14,9 +14,16 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
     "eslint-config-dyor": "workspace:*",
     "prettier": "latest",
     "turbo": "latest"
+  },
+  "commitlint": {
+    "extends": [
+      "./node_modules/@commitlint/config-conventional"
+    ]
   },
   "lint-staged": {
     "*.{json,md,yaml,yml}": [
@@ -32,6 +39,5 @@
   "engines": {
     "node": "18.x"
   },
-  "dependencies": {},
   "packageManager": "pnpm@7.28.0"
 }
