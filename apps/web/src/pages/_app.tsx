@@ -8,7 +8,7 @@ const inter = Inter({
 })
 
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => (
-  <main className={`${inter.variable} font-sans`}>
+  <main className={`${inter.variable} flex-center h-screen font-sans`}>
     {/* eslint-disable-next-line react/jsx-props-no-spreading */}
     <Component {...pageProps} />
   </main>

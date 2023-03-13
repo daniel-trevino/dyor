@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .gradient-heading {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500;
+  }
+
+  .animated-gradient {
+    @apply animate-text bg-gradient-to-r from-cyan-500 via-purple-500 to-blue-500 bg-clip-text text-transparent text-5xl font-black;
+  }
+}

@@ -1,9 +1,9 @@
-import { Button } from 'ui'
+import { Button, Heading } from 'ui'
 
 const Web: React.FC = () => (
-  <div>
-    <h1>Web</h1>
-    <Button />
+  <div className="text-center">
+    <Heading animatedGradient>DYOR</Heading>
+    <Button>Connect Wallet</Button>
   </div>
 )
 

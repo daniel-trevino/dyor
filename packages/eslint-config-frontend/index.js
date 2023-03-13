@@ -39,6 +39,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
+    'react/button-has-type': 'off',
 
     // next
     '@next/next/no-html-link-for-pages': 'off',
