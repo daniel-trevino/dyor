@@ -17,8 +17,9 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
+    'plugin:tailwindcss/recommended',
   ],
-  plugins: [...require('eslint-configs/eslint-base.js').plugins],
+  plugins: [...require('eslint-configs/eslint-base.js').plugins, 'tailwindcss'],
   settings: {
     ...require('eslint-configs/eslint-base.js').settings,
     'import/parsers': {
@@ -42,6 +43,15 @@ module.exports = {
     // next
     '@next/next/no-html-link-for-pages': 'off',
     '@next/next/no-img-element': 'off',
+
+    // tailwindcss
+    'tailwindcss/classnames-order': 'warn',
+    'tailwindcss/enforces-negative-arbitrary-values': 'warn',
+    'tailwindcss/enforces-shorthand': 'warn',
+    'tailwindcss/migration-from-tailwind-2': 'warn',
+    'tailwindcss/no-arbitrary-value': 'off',
+    'tailwindcss/no-custom-classname': 'warn',
+    'tailwindcss/no-contradicting-classname': 'error',
   },
   overrides: require('eslint-configs/eslint-base.js').overrides,
   ignorePatterns: require('eslint-configs/eslint-base.js').ignorePatterns,
