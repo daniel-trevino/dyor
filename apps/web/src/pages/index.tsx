@@ -1,10 +1,20 @@
-import { Button, Heading } from 'ui'
+import { Heading } from 'ui'
+import { useAccount } from 'wagmi'
+import dynamic from 'next/dynamic'
 
-const Web: React.FC = () => (
-  <div className="text-center">
-    <Heading animatedGradient>DYOR</Heading>
-    <Button>Connect Wallet</Button>
-  </div>
-)
+const ConnectButton = dynamic(() => import('../components/ConnectButton'), {
+  ssr: false,
+})
+
+const Web: React.FC = () => {
+  const { address } = useAccount()
+  return (
+    <div className="text-center">
+      <Heading animatedGradient>DYOR</Heading>
+      {address && <p className="text-2xl">Your address is: {address}</p>}
+      <ConnectButton />
+    </div>
+  )
+}
 
 export default Web

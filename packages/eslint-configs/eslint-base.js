@@ -38,6 +38,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/lines-between-class-members': 'off',
+    '@typescript-eslint/prefer-readonly': 'error',
     'import/prefer-default-export': 'off',
   },
   overrides: [

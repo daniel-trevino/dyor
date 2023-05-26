@@ -6,6 +6,11 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "web#build": {
+      "dependsOn": ["^build"],
+      "env": ["NEXT_PUBLIC_HOST", "NEXT_PUBLIC_NETWORK"],
+      "outputs": [".next/**"]
+    },
     "lint": {
       "outputs": []
     },
