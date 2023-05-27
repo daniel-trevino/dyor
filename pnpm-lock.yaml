@@ -61,9 +61,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@next/font':
-        specifier: 13.4.4
-        version: 13.4.4
       dyor-constants:
         specifier: workspace:*
         version: link:../../packages/dyor-constants
@@ -1606,13 +1603,6 @@ packages:
       }
     dependencies:
       glob: 7.1.7
-    dev: false
-
-  /@next/font@13.4.4:
-    resolution:
-      {
-        integrity: sha512-iYmL/O0rV9NS8a2UXuRoZOzImz8Q0mM8bAmxtj8nccrpwZ6iOOZlbf2d0Genczl4wtuXRXVPR8goGjJM4C2SDg==,
-      }
     dev: false
 
   /@next/swc-darwin-arm64@13.4.4:

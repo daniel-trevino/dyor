@@ -4,7 +4,7 @@ import { createPublicClient, http } from 'viem'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import type { AppProps } from 'next/app'
 import '../styles/globals.css'
-import { Inter } from '@next/font/google'
+import { Inter } from 'next/font/google'
 import { useEffect } from 'react'
 import { cn } from 'ui'
 
