@@ -1,14 +1,16 @@
-import { SupportedNetworks } from 'dyor-constants'
+import { goerli, type Chain } from 'viem/chains'
 
 type Config = {
   host: string
-  network: SupportedNetworks
+  defaultNetwork: Chain
   isProduction: boolean
+  supportedNetworks: Chain[]
 }
 
 const generalConfig = {
   host: process.env.NEXT_PUBLIC_HOST ?? 'http://localhost:3000',
-  network: (process.env.NEXT_PUBLIC_NETWORK as unknown as SupportedNetworks) ?? 'localhost',
+  defaultNetwork: (process.env.NEXT_PUBLIC_NETWORK as unknown as Chain) ?? goerli,
+  supportedNetworks: [goerli],
 }
 
 const appConfig = {

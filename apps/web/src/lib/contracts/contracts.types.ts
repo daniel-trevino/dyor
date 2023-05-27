@@ -1,8 +1,10 @@
-import { SupportedNetworks } from 'dyor-constants'
+import chains from 'viem/chains'
 import { CoreTokenContractNames } from './core-contracts'
 
+export type ChainNames = keyof typeof chains
+
 export type ExternalContract = {
-  [key in SupportedNetworks]?: string
+  [key in ChainNames]?: `0x${string}`
 }
 
 export type SupportedContractsNames = CoreTokenContractNames
