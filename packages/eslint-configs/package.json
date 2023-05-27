@@ -5,7 +5,6 @@
   "license": "MIT",
   "files": [
     "eslint-base.js",
-    "eslint-frontend.js",
     "eslint-node.js"
   ],
   "dependencies": {

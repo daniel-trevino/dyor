@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "extends": ["frontend"],
-  "parserOptions": {
-    "project": ["./apps/web/tsconfig.json"]
-  }
-}

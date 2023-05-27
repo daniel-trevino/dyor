@@ -9,7 +9,8 @@
     "eslint-config-prettier": "8.8.0",
     "eslint-config-turbo": "^1.9.9",
     "eslint-configs": "workspace:*",
-    "eslint-plugin-react": "7.32.2"
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-tailwindcss": "3.12.0"
   },
   "devDependencies": {
     "typescript": "5.0.4"

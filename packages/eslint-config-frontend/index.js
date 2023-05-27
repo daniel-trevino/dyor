@@ -46,7 +46,12 @@ module.exports = {
     '@next/next/no-img-element': 'off',
 
     // tailwindcss
-    'tailwindcss/classnames-order': 'warn',
+    'tailwindcss/classnames-order': [
+      'warn',
+      {
+        callees: ['classnames', 'clsx', 'ctl', 'cva', 'tv', 'cn'],
+      },
+    ],
     'tailwindcss/enforces-negative-arbitrary-values': 'warn',
     'tailwindcss/enforces-shorthand': 'warn',
     'tailwindcss/migration-from-tailwind-2': 'warn',

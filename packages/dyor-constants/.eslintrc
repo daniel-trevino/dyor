@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "extends": ["dyor"],
-  "parserOptions": {
-    "project": ["./apps/web/tsconfig.json"]
-  }
-}

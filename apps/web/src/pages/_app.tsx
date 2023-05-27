@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app'
 import '../styles/globals.css'
 import { Inter } from '@next/font/google'
 import { useEffect } from 'react'
+import { cn } from 'ui'
 
 const { chains } = configureChains([mainnet], [publicProvider()])
 
@@ -31,7 +32,12 @@ const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
   }, [])
 
   return (
-    <main className={`${inter.variable} flex-center h-screen font-sans`}>
+    <main
+      className={cn(
+        inter.variable,
+        'flex-center h-screen font-sans dark:bg-gray-950 dark:text-slate-50'
+      )}
+    >
       <WagmiConfig config={config}>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
