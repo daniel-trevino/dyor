@@ -17,8 +17,8 @@
     "@commitlint/cli": "17.6.3",
     "@commitlint/config-conventional": "17.6.3",
     "eslint-config-dyor": "workspace:*",
-    "prettier": "^2.8.8",
-    "turbo": "^1.9.9"
+    "prettier": "2.8.8",
+    "turbo": "1.9.9"
   },
   "commitlint": {
     "extends": [
